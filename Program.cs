@@ -7,22 +7,24 @@ namespace Contact
         static void Main(string[] args)
         {
             Console.WriteLine("Here is your contact app");
-            Console.WriteLine("> Enter 'contact help' to see the commandos");
+            Console.WriteLine(" > Enter 'contact help' to see the commandos");
+            
             //list of the commandos
             List<string> commando = new List<string>
             {
-                " > contacts - Shows your contacts",
-                " > contact add <name> <number> - Adds a contact",
-                " > contact remove <name> <number> - Removes contact",
-                " > save - saves your contacts",
-                " > exit - exists the terminal"
+                "   > contacts - Shows your contacts",
+                "   > contact add <name> <number> - Adds a contact",
+                "   > contact remove <name> <number> - Removes contact",
+                "   > clear - clears what has been written",
+                //"   > save - saves your contacts for future refrences ;)",
+                "   > exit - exists the terminal"
             };
             //the contact and their phonenumber is saved here
             Dictionary<string, string> yourContacts = new Dictionary<string, string>();
 
             while (true)
             {
-                Console.Write("> ");
+                Console.Write("~ ");
                 string firstInput = Console.ReadLine().ToLower();
 
                 if (firstInput == "contact help") //shows the commando list
@@ -53,10 +55,11 @@ namespace Contact
                         if (!yourContacts.ContainsKey(name))
                         {
                             yourContacts.Add(name, number);
+                            Console.WriteLine(partsAdd[0] + " was added");
                         }
                         else
                         {
-                            Console.WriteLine($"{name} already exists");
+                            Console.WriteLine(partsAdd[0], " alredy exists");
                         }
                     }
 
@@ -76,13 +79,17 @@ namespace Contact
                             yourContacts.Remove(nameRemove);
                             yourContacts.Remove(numberRemove);
 
-                            Console.WriteLine($"{nameRemove} was removed");
+                            Console.WriteLine(partsRemove[0] + " was removed");
                         }
                         else
                         {
-                            Console.WriteLine($"{nameRemove} does not exist");
+                            Console.WriteLine(partsRemove[0] + " does not exist");
                         }
                     }
+                }
+                else if(firstInput == "clear")
+                {
+                    Console.Clear();
                 }
                 else if(firstInput == "exit")
                 {
