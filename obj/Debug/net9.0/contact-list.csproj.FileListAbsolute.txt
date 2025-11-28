@@ -1,0 +1,15 @@
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\bin\Debug\net9.0\contact-list.exe
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\bin\Debug\net9.0\contact-list.deps.json
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\bin\Debug\net9.0\contact-list.runtimeconfig.json
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\bin\Debug\net9.0\contact-list.dll
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\bin\Debug\net9.0\contact-list.pdb
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.AssemblyInfoInputs.cache
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.AssemblyInfo.cs
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.csproj.CoreCompileInputs.cache
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.dll
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\refint\contact-list.dll
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.pdb
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.genruntimeconfig.cache
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\ref\contact-list.dll
+C:\Users\emmelinne.karlsson\OneDrive - Academedia\Documents\LBS_courses\gunwakurs01\Projekt\contact-list\obj\Debug\net9.0\contact-list.sourcelink.json
