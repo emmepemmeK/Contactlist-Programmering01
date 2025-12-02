@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 
 namespace Contact
 {
@@ -6,6 +7,9 @@ namespace Contact
     {
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Magenta;
+            
+
             Console.WriteLine("Here is your contact app");
             Console.WriteLine(" > Enter 'contact help' to see the commandos");
             
@@ -14,9 +18,9 @@ namespace Contact
             {
                 "   > contacts - Shows your contacts",
                 "   > contact add <name> <number> - Adds a contact",
-                "   > contact remove <name> <number> - Removes contact",
+                "   > contact remove <name> - Removes contact",
                 "   > clear - clears what has been written",
-                //"   > save - saves your contacts for future refrences ;)",
+                "------------------------------",
                 "   > exit - exists the terminal"
             };
             //the contact and their phonenumber is saved here
@@ -29,10 +33,12 @@ namespace Contact
 
                 if (firstInput == "contact help") //shows the commando list
                 {
+                    
                     foreach (string i in commando)
                     {
                         Console.WriteLine(i);
                     }
+                    
                 }
                 else if (firstInput == "contacts")   //shows the saved contacts
                 {
@@ -93,7 +99,8 @@ namespace Contact
                 }
                 else if(firstInput == "exit")
                 {
-                    Console.Write("Bye bye!");
+                    Console.WriteLine("Bye bye!");
+                    Console.Write("-ˋˏ✄┈┈┈┈");
                     break;
                 }
                 else
