@@ -1,30 +1,81 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Resources;
 using System.Text.Json;
 
 namespace Contact
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Help()
         {
-            Console.BackgroundColor = ConsoleColor.Magenta;
-            
-
-            Console.WriteLine("Here is your contact app");
-            Console.WriteLine(" > Enter 'contact help' to see the commandos");
-            
-            //list of the commandos
-            List<string> commando = new List<string>
+            List<string> commando = new List<string> //list of the commandos
             {
                 "   > contacts - Shows your contacts",
                 "   > contact add <name> <number> - Adds a contact",
                 "   > contact remove <name> - Removes contact",
                 "   > clear - clears what has been written",
                 "------------------------------",
+                "   > search <name> - shows if that name is in your contacts",
+                "   > edit <name> - edits a contact",
+                "------------------------------",
                 "   > exit - exists the terminal"
             };
+            foreach (string i in commando)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void Addcontacts(Dictionary<string, string> contacts, string input) //this methods adds a contact
+        {
+            string remainingAdd = input.Substring(12).Trim();
+            string[] partsAdd = remainingAdd.Split(' ');
+
+            if (partsAdd.Length >= 2)
+            {
+                string name = partsAdd[0];
+                string number = partsAdd[1];
+
+                if (!contacts.ContainsKey(name))
+                {
+                    contacts.Add(name, number);
+                    Console.WriteLine(partsAdd[0] + " was added");
+                }
+                else
+                {
+                    Console.WriteLine(partsAdd[0] + " alredy exists");
+                }
+            }
+        }
+
+        static void RemoveContacts(Dictionary<string, string> removecontacts, string input) //this method removes a chosen contact
+        {
+            string remainingRemove = input.Substring(14).Trim();
+            string[] partsRemove = remainingRemove.Split(' ');
+
+            if (!string.IsNullOrEmpty(remainingRemove))
+            {
+                if (removecontacts.ContainsKey(remainingRemove))
+                {
+                    removecontacts.Remove(remainingRemove);
+                    Console.WriteLine(remainingRemove + " was removed");
+                }
+                else
+                {
+                    Console.WriteLine(remainingRemove + " does not exist");
+                }
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Here is your contact app");
+            Console.WriteLine(" > Enter 'contact help' to see the commandos");
+
             //the contact and their phonenumber is saved here
             Dictionary<string, string> yourContacts = new Dictionary<string, string>();
+
 
             while (true)
             {
@@ -33,71 +84,54 @@ namespace Contact
 
                 if (firstInput == "contact help") //shows the commando list
                 {
-                    
-                    foreach (string i in commando)
-                    {
-                        Console.WriteLine(i);
-                    }
-                    
+                    Help();
                 }
                 else if (firstInput == "contacts")   //shows the saved contacts
                 {
-                    foreach (var i in yourContacts)
+                    if (yourContacts.Count == 0)
                     {
-                        Console.WriteLine($"{i.Key} - {i.Value}");
+                        Console.WriteLine("There are no contacts added");
+                    }
+                    else
+                    {
+                        foreach (var i in yourContacts)
+                        {
+                            Console.WriteLine($"{i.Key} - {i.Value}");
+                        }
                     }
                 }
 
-                else if (firstInput.StartsWith("contact add")) //adds a contact
+
+                else if (firstInput.StartsWith("contact add")) 
                 {
-                    string remainingAdd = firstInput.Substring(12);
-                    string[] partsAdd = remainingAdd.Split(' ');
-
-                    if (partsAdd.Length >= 2)
-                    {
-                        string name = partsAdd[0];
-                        string number = partsAdd[1];
-
-                        if (!yourContacts.ContainsKey(name))
-                        {
-                            yourContacts.Add(name, number);
-                            Console.WriteLine(partsAdd[0] + " was added");
-                        }
-                        else
-                        {
-                            Console.WriteLine(partsAdd[0], " alredy exists");
-                        }
-                    }
-
+                    Addcontacts(yourContacts, firstInput);
                 }
+
                 else if (firstInput.StartsWith("contact remove"))  //removes a contact
                 {
-                    string remainingRemove = firstInput.Substring(14);
-                    string[] partsRemove = remainingRemove.Split(' ');
+                    RemoveContacts(yourContacts, firstInput);
+                }
 
-                    if (partsRemove.Length >= 2)
+                else if (firstInput.StartsWith("search")) // looks in the dictionary for that key
+                {
+                    string remainSearch = firstInput.Substring(7).Trim();
+                    string[] searchSplit = remainSearch.Split(' ');
+
+                    if (yourContacts.ContainsKey(remainSearch))
                     {
-                        string nameRemove = partsRemove[0];
-                        string numberRemove = partsRemove[1];
-
-                        if (!yourContacts.ContainsKey(nameRemove))
-                        {
-                            yourContacts.Remove(nameRemove);
-                            yourContacts.Remove(numberRemove);
-
-                            Console.WriteLine(partsRemove[0] + " was removed");
-                        }
-                        else
-                        {
-                            Console.WriteLine(partsRemove[0] + " does not exist");
-                        }
+                        Console.WriteLine($"{remainSearch} is in your contacts. Their phonenumber is: {yourContacts[remainSearch]}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{remainSearch} is not in your contacts");
                     }
                 }
-                else if(firstInput == "clear")
+
+                else if (firstInput == "clear")
                 {
                     Console.Clear();
                 }
-                else if(firstInput == "exit")
+                else if (firstInput == "exit")
                 {
                     Console.WriteLine("Bye bye!");
                     Console.Write("-ˋˏ✄┈┈┈┈");
