@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Resources;
+using System.IO;
 using System.Text.Json;
 
 namespace Contact
@@ -14,16 +14,33 @@ namespace Contact
                 "   > contacts - Shows your contacts",
                 "   > contact add <name> <number> - Adds a contact",
                 "   > contact remove <name> - Removes contact",
-                "   > clear - clears what has been written",
                 "------------------------------",
                 "   > search <name> - shows if that name is in your contacts",
                 "   > edit <name> - edits a contact",
                 "------------------------------",
+               // "   > save - saves your added contacts",
+                //"   > load - loads previously added contacts",
+                "------------------------------",
+                "   > clear - clears what has been written",
                 "   > exit - exists the terminal"
             };
             foreach (string i in commando)
             {
                 Console.WriteLine(i);
+            }
+        }
+        static void ShowContacts(Dictionary<string, string> contacts) //this methods shows the contacts saved in your dictionary
+        {
+            if (contacts.Count == 0)
+            {
+                Console.WriteLine("There are no contacts added");
+            }
+            else
+            {
+                foreach (var i in contacts)
+                {
+                    Console.WriteLine($"{i.Key} - {i.Value}");
+                }
             }
         }
 
@@ -68,79 +85,102 @@ namespace Contact
             }
         }
 
+        static void Search(Dictionary<string, string> contacst, string input) //here you can search if a contact is in your contact dictionary
+        {
+            string remainSearch = input.Substring(7);
+            string[] splitSearch = remainSearch.Split(' ');
+            if (contacst.ContainsKey(remainSearch))
+            {
+                Console.WriteLine($"{remainSearch} is in your contacts, their number is {contacst[remainSearch]}");
+            }
+            else
+            {
+                Console.WriteLine($"{remainSearch} is not in your contacts");
+            }
+        }
+
+        static void Edit(Dictionary<string, string> contacts, string input) //a contact can be changed here. It will cahnge both name and number
+        {
+            string remainEdit = input.Substring(5);
+            if (contacts.ContainsKey(remainEdit))
+            {
+                Console.WriteLine($"What do you want to change {remainEdit} to?");
+                Console.Write("~ ");
+                string update = Console.ReadLine()!.ToLower();
+
+
+                string[] partsEdit = update.Split(' ');
+                string newName = partsEdit[0];
+                string newNumber = partsEdit[1];
+
+                contacts.Remove(remainEdit);
+                contacts[newName] = newNumber;
+            }
+            else
+            {
+                Console.WriteLine("You can't update a contact that does not exit.");
+            }
+        }
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Here is your contact app");
-            Console.WriteLine(" > Enter 'contact help' to see the commandos");
-
-            //the contact and their phonenumber is saved here
-            Dictionary<string, string> yourContacts = new Dictionary<string, string>();
+            Console.WriteLine(" > Enter 'help' to see the commandos");
 
 
-            while (true)
+            Dictionary<string, string> yourContacts = new Dictionary<string, string>();   //the contact and their phonenumber is saved here
+
+            bool running = true;
+
+
+            while (running)
             {
                 Console.Write("~ ");
-                string firstInput = Console.ReadLine().ToLower();
+                string firstInput = Console.ReadLine()!.ToLower();
 
-                if (firstInput == "contact help") //shows the commando list
+                switch (firstInput) //the different outputs based on the input you type
                 {
-                    Help();
-                }
-                else if (firstInput == "contacts")   //shows the saved contacts
-                {
-                    if (yourContacts.Count == 0)
-                    {
-                        Console.WriteLine("There are no contacts added");
-                    }
-                    else
-                    {
-                        foreach (var i in yourContacts)
-                        {
-                            Console.WriteLine($"{i.Key} - {i.Value}");
-                        }
-                    }
-                }
+                    case "help":
+                        Help();
+                        break;
 
+                    case "contacts":
+                        ShowContacts(yourContacts);
+                        break;
 
-                else if (firstInput.StartsWith("contact add")) 
-                {
-                    Addcontacts(yourContacts, firstInput);
-                }
+                    case string s when s.StartsWith("contact add"):
+                        Addcontacts(yourContacts, firstInput);
+                        break;
 
-                else if (firstInput.StartsWith("contact remove"))  //removes a contact
-                {
-                    RemoveContacts(yourContacts, firstInput);
-                }
+                    case string s when s.StartsWith("contact remove"):
+                        RemoveContacts(yourContacts, firstInput);
+                        break;
 
-                else if (firstInput.StartsWith("search")) // looks in the dictionary for that key
-                {
-                    string remainSearch = firstInput.Substring(7).Trim();
-                    string[] searchSplit = remainSearch.Split(' ');
+                    case string s when s.StartsWith("search"):
+                        Search(yourContacts, firstInput);
+                        break;
 
-                    if (yourContacts.ContainsKey(remainSearch))
-                    {
-                        Console.WriteLine($"{remainSearch} is in your contacts. Their phonenumber is: {yourContacts[remainSearch]}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{remainSearch} is not in your contacts");
-                    }
+                    case string s when s.StartsWith("edit"):
+                        Edit(yourContacts, firstInput);
+                        break;
+
+                    case "clear":
+                        Console.Clear();
+                        break;
+
+                    case "exit":
+                        Console.WriteLine("Bye bye!");
+                        Console.Write("-ˋˏ✄┈┈┈┈");
+                        running = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid command, please check your spelling.");
+                        break;
+
                 }
 
-                else if (firstInput == "clear")
-                {
-                    Console.Clear();
-                }
-                else if (firstInput == "exit")
-                {
-                    Console.WriteLine("Bye bye!");
-                    Console.Write("-ˋˏ✄┈┈┈┈");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid command, please check your spelling.");
-                }
             }
 
 
