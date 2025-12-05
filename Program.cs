@@ -151,8 +151,6 @@ namespace Contact
             Console.WriteLine(" > Enter 'help' to see the commandos");
 
 
-      
-
             bool running = true;
 
 
