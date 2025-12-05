@@ -7,6 +7,7 @@ namespace Contact
 {
     class Program
     {
+        public static Dictionary<string, string> yourContacts = new Dictionary<string, string>();     //the contact and their phonenumber is saved here
         static void Help()
         {
             List<string> commando = new List<string> //list of the commandos
@@ -18,8 +19,8 @@ namespace Contact
                 "   > search <name> - shows if that name is in your contacts",
                 "   > edit <name> - edits a contact",
                 "------------------------------",
-               // "   > save - saves your added contacts",
-                //"   > load - loads previously added contacts",
+                "   > save - saves your added contacts",
+                "   > load - loads previously added contacts",
                 "------------------------------",
                 "   > clear - clears what has been written",
                 "   > exit - exists the terminal"
@@ -66,16 +67,16 @@ namespace Contact
             }
         }
 
-        static void RemoveContacts(Dictionary<string, string> removecontacts, string input) //this method removes a chosen contact
+        static void RemoveContacts(Dictionary<string, string> contacts, string input) //this method removes a chosen contact
         {
             string remainingRemove = input.Substring(14).Trim();
             string[] partsRemove = remainingRemove.Split(' ');
 
             if (!string.IsNullOrEmpty(remainingRemove))
             {
-                if (removecontacts.ContainsKey(remainingRemove))
+                if (contacts.ContainsKey(remainingRemove))
                 {
-                    removecontacts.Remove(remainingRemove);
+                    contacts.Remove(remainingRemove);
                     Console.WriteLine(remainingRemove + " was removed");
                 }
                 else
@@ -104,7 +105,7 @@ namespace Contact
             string remainEdit = input.Substring(5);
             if (contacts.ContainsKey(remainEdit))
             {
-                Console.WriteLine($"What do you want to change {remainEdit} to?");
+                Console.WriteLine($"What do you want to change {remainEdit} to? <name> <number>");
                 Console.Write("~ ");
                 string update = Console.ReadLine()!.ToLower();
 
@@ -115,13 +116,34 @@ namespace Contact
 
                 contacts.Remove(remainEdit);
                 contacts[newName] = newNumber;
+
+                Console.WriteLine($"{remainEdit} has been edited!");
             }
             else
             {
                 Console.WriteLine("You can't update a contact that does not exit.");
             }
         }
+        static void Save(Dictionary<string, string> contacts) //saves contacts to a json file so you can load them later 😘
+        {
+            string filePath = "contacts.json";
+            string jsonString = JsonSerializer.Serialize(contacts);
+            File.WriteAllText(filePath, jsonString);
 
+            Console.WriteLine("Saving...");
+            Console.WriteLine("========================");
+            Console.WriteLine("Finished !");
+        }
+        static void Load() //loads previosuly added contacts
+        {
+            string filePath = "contacts.json";
+            string jsonString = File.ReadAllText(filePath);
+            yourContacts = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+
+            Console.WriteLine("Loading...");
+            Console.WriteLine("========================");
+            Console.WriteLine("Finished!");
+        }
 
         static void Main(string[] args)
         {
@@ -129,7 +151,7 @@ namespace Contact
             Console.WriteLine(" > Enter 'help' to see the commandos");
 
 
-            Dictionary<string, string> yourContacts = new Dictionary<string, string>();   //the contact and their phonenumber is saved here
+      
 
             bool running = true;
 
@@ -173,6 +195,14 @@ namespace Contact
                         Console.WriteLine("Bye bye!");
                         Console.Write("-ˋˏ✄┈┈┈┈");
                         running = false;
+                        break;
+
+                    case "save":
+                        Save(yourContacts);
+                        break;
+
+                    case "load":
+                        Load();
                         break;
 
                     default:
